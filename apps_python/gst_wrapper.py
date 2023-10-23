@@ -678,6 +678,29 @@ def get_input_elements(input):
                 input.width = 1920
                 input.height = 1080
 
+        elif input.format.startswith("custom"):
+            print("Debug: running custom pipeline")
+            property = {"device": input.source, "name": source_name, "io-mode": 2, "do-timestamp": True}
+            caps = "image/jpeg, width=%d, height=%d" % (input.width, input.height)
+            element = make_element("v4l2src", property=property, caps=caps)
+            input_element_list += element
+
+            element = make_element("jpegdec")
+            input_element_list += element
+
+            element = make_element("videoconvert")
+            input_element_list += element
+
+            #lut_file_path = "/opt/robotics_sdk/ros1/drivers/gscam/config/niryo_HD_LUT.bin"
+            lut_file_path = "/opt/edgeai-gst-apps-pick-and-place/niryo_camera_info/niryo_HD_LUT.bin" 
+            property = {"sensor-name": "SENSOR_SONY_IMX219_RPI", "lut-file": lut_file_path, "ldc-ds-factor": 2, "ldc-table-width": 1280, "ldc-table-height": 720, "out-block-height": 16, "out-block-width": 64}
+            element = make_element("tiovxldc", property=property)
+            input_element_list += element
+
+            property = {"method": "rotate-180"}
+            element = make_element("videoflip", property=property)
+            input_element_list += element
+
         else:
             property = {"device": input.source, "name": source_name}
             caps = "video/x-raw, width=%d, height=%d" % (input.width, input.height)
