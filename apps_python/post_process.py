@@ -361,25 +361,10 @@ class PostProcessHumanPoseEstimation(PostProcess):
 
         # This list gives the information that which two keypoints needs to connect.
         self.skeleton = [
-            [16, 14],
-            [14, 12],
-            [17, 15],
-            [15, 13],
-            [12, 13],
-            [6, 12],
-            [7, 13],
-            [6, 7],
-            [6, 8],
-            [7, 9],
-            [8, 10],
-            [9, 11],
             [2, 3],
             [1, 2],
-            [1, 3],
-            [2, 4],
-            [3, 5],
-            [4, 6],
-            [5, 7],
+            [4, 1],
+            [3, 4],
         ]
         # Choosing color of a link
         self.pose_limb_color = self.palette[
