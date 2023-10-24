@@ -691,14 +691,14 @@ def get_input_elements(input):
             element = make_element("videoconvert")
             input_element_list += element
 
+            property = {"method": "rotate-180"}
+            element = make_element("videoflip", property=property)
+            input_element_list += element
+
             #lut_file_path = "/opt/robotics_sdk/ros1/drivers/gscam/config/niryo_HD_LUT.bin"
             lut_file_path = "/opt/edgeai-gst-apps-pick-and-place/niryo_camera_info/niryo_HD_LUT.bin" 
             property = {"sensor-name": "SENSOR_SONY_IMX219_RPI", "lut-file": lut_file_path, "ldc-ds-factor": 2, "ldc-table-width": 1280, "ldc-table-height": 720, "out-block-height": 16, "out-block-width": 64}
             element = make_element("tiovxldc", property=property)
-            input_element_list += element
-
-            property = {"method": "rotate-180"}
-            element = make_element("videoflip", property=property)
             input_element_list += element
 
         else:
